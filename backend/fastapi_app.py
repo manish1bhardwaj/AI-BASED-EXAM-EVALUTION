@@ -53,11 +53,8 @@ app.add_middleware(
 )
 
 # Database setup
-client = MongoClient("mongodb://localhost:27017/")
-db = client["exam_system"]
-users = db["users"]
-exams = db["exams"]
-uploads = db["uploads"]
+# Database setup
+from database import client, db, users, exams, uploads
 
 # Folder configuration
 BASE_DIR = Path(__file__).parent

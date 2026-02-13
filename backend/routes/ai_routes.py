@@ -28,9 +28,11 @@ from models.evaluation_service import (
 router = APIRouter()
 
 # MongoDB connection
-client = MongoClient("mongodb://localhost:27017/")
-db = client["exam_system"]
-uploads = db["uploads"]
+# MongoDB connection
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from database import client, db, uploads
 
 # File paths
 BASE_DIR = Path(__file__).parent.parent

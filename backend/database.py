@@ -18,3 +18,4 @@ users = db.users
 exams = db.exams
 submissions = db.submissions
 results = db.results
+uploads = db.uploads
