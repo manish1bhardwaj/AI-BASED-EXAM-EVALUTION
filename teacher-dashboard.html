@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
+
 <body>
     <div class="theme-toggle" onclick="toggleTheme()">
         <span id="theme-icon">🌙</span>
@@ -27,7 +29,7 @@
                 </a>
                 <a href="#" class="nav-item" onclick="showSection('upload-key')">
                     <span class="nav-icon">📝</span>
-                    <span>Upload Answer Key</span>
+                    <span>Upload Question Paper</span>
                 </a>
                 <a href="#" class="nav-item" onclick="showSection('submissions')">
                     <span class="nav-icon">📄</span>
@@ -52,7 +54,7 @@
             <header class="dashboard-header">
                 <h1 id="section-title">Dashboard Overview</h1>
                 <div class="header-actions">
-                    <button class="btn btn-primary" onclick="showSection('upload-key')">+ Upload Answer Key</button>
+                    <button class="btn btn-primary" onclick="showSection('upload-key')">+ Upload Question Paper</button>
                 </div>
             </header>
 
@@ -62,45 +64,39 @@
                     <div class="stat-card card">
                         <div class="stat-icon">📚</div>
                         <div class="stat-info">
-                            <h3>12</h3>
+                            <h3 id="totalExams">0</h3>
                             <p>Total Exams</p>
                         </div>
                     </div>
                     <div class="stat-card card">
                         <div class="stat-icon">📄</div>
                         <div class="stat-info">
-                            <h3>45</h3>
+                            <h3 id="totalSubmissions">0</h3>
                             <p>Submissions</p>
                         </div>
                     </div>
                     <div class="stat-card card">
                         <div class="stat-icon">✅</div>
                         <div class="stat-info">
-                            <h3>38</h3>
+                            <h3 id="evaluatedCount">0</h3>
                             <p>Evaluated</p>
                         </div>
                     </div>
                     <div class="stat-card card">
                         <div class="stat-icon">⏳</div>
                         <div class="stat-info">
-                            <h3>7</h3>
+                            <h3 id="pendingCount">0</h3>
                             <p>Pending</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="recent-activity card">
-                    <h3>Recent Submissions</h3>
-                    <div class="activity-list" id="recentActivity">
-                        <p>No recent activity yet.</p>
-                    </div>
-                </div>
             </div>
 
             <!-- ================= UPLOAD ANSWER KEY ================= -->
             <div id="upload-key" class="content-section">
                 <div class="upload-container card">
-                    <h3>Upload Answer Key</h3>
+                    <h3>Upload Question Paper</h3>
                     <form id="answerKeyForm">
                         <div class="form-group">
                             <label>Exam Name</label>
@@ -115,7 +111,7 @@
                             <input type="number" id="totalMarks" placeholder="e.g., 100" required>
                         </div>
                         <div class="form-group">
-                            <label>Answer Key Type</label>
+                            <label>Question Paper Type</label>
                             <select id="keyType">
                                 <option>Descriptive Answers</option>
                                 <option>MCQs</option>
@@ -123,10 +119,11 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>Upload Answer Key Document</label>
+                            <label>Upload Question Paper Document</label>
                             <div class="file-upload" id="answerKeyUpload">
                                 <input type="file" id="answerKeyFile" accept="image/*,.pdf" hidden>
-                                <div class="upload-placeholder" onclick="document.getElementById('answerKeyFile').click()">
+                                <div class="upload-placeholder"
+                                    onclick="document.getElementById('answerKeyFile').click()">
                                     <span class="upload-icon">📁</span>
                                     <p>Click to upload or drag and drop</p>
                                     <p class="upload-hint">PDF, JPG, PNG (Max 10MB)</p>
@@ -137,30 +134,34 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Upload Answer Key</button>
+                        <button type="submit" class="btn btn-primary">Upload Question Paper</button>
                     </form>
                     <div id="teacherUploadStatus" class="upload-status"></div>
 
-                    <h4 style="margin-top:20px;">Uploaded Answer Keys</h4>
-                    <ul id="teacherUploadList" class="upload-list"><p>No uploads yet.</p></ul>
+                    <h4 style="margin-top:20px;">Uploaded Question Papers</h4>
+                    <ul id="teacherUploadList" class="upload-list">
+                        <p>No uploads yet.</p>
+                    </ul>
                 </div>
             </div>
 
-            <!-- ================= VIEW SUBMISSIONS (STUDENT ANSWER SHEETS) ================= -->
-            <div id="submissions" class="content-section">
-                <div class="submissions-container card">
-                    <h3>Student Submissions</h3>
-                    <div class="submissions-header">
-                        <input type="text" placeholder="Search by exam or roll number..." class="search-input">
-                        <select class="filter-select">
-                            <option>All</option>
-                            <option>Pending</option>
-                            <option>Evaluated</option>
+            <!-- VIEW SUBMISSIONS SECTION -->
+            <div id="submissions" class="content-section active">
+                <div class="submissions-container">
+                    <h2>Student Submissions</h2>
+
+                    <div class="submissions-controls">
+                        <input type="text" id="submissionSearch" placeholder="Search by exam or roll number..."
+                            class="submission-search">
+                        <select id="submissionFilter" class="submission-filter">
+                            <option value="all">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="evaluated">Evaluated</option>
                         </select>
                     </div>
-                    <!-- dynamic student submissions from JS -->
-                    <div id="studentSubmissions" class="submissions-grid">
-                        <p>Loading submissions...</p>
+
+                    <div id="studentSubmissions" class="submission-grid">
+                        <p>⏳ Loading submissions...</p>
                     </div>
                 </div>
             </div>
@@ -170,35 +171,50 @@
                 <div class="evaluate-container card">
                     <h3>Evaluate Answer Sheet</h3>
                     <div class="evaluate-content">
+
+                        <!-- Left: Sheet Preview -->
                         <div class="sheet-preview">
                             <h4>Answer Sheet Preview</h4>
-                            <div class="preview-placeholder">
-                                <p>Answer sheet image will appear here</p>
+                            <div class="preview-placeholder" id="previewPlaceholder">
+                                <p>Select a submission to preview</p>
                             </div>
                         </div>
+
+                        <!-- Right: Evaluation Panel -->
                         <div class="evaluation-panel">
                             <h4>AI Evaluation</h4>
-                            <div class="evaluation-info">
-                                <p><strong>Student:</strong> John Doe</p>
-                                <p><strong>Exam:</strong> Mathematics Final Exam</p>
-                                <p><strong>Total Marks:</strong> 100</p>
+                            <div class="evaluation-info" id="evaluationInfo">
+                                <p><strong>Student:</strong> <span id="studentName">—</span></p>
+                                <p><strong>Exam:</strong> <span id="examName">—</span></p>
+                                <p><strong>Total Marks:</strong> <span id="totalMarks">100</span></p>
                             </div>
-                            <button class="btn btn-primary btn-full" onclick="startEvaluation()">Start AI Evaluation</button>
-                            <div class="evaluation-progress" id="evaluationProgress" style="display: none;">
-                                <div class="progress-bar">
-                                    <div class="progress-fill" id="progressFill"></div>
+                            <button class="btn btn-primary btn-full" id="startEvaluationBtn" disabled>Start AI
+                                Evaluation</button>
+
+                            <!-- Evaluation Status/Progress -->
+                            <div id="evaluationStatus" class="evaluation-status"></div>
+
+                            <!-- Result Summary (Hidden initially) -->
+                            <div id="evaluationResult" style="display: none; margin-top: 15px;">
+                                <div class="result-score-box">
+                                    <span class="score-value" id="resultScore">0</span>
+                                    <span class="score-total">/ 100</span>
                                 </div>
-                                <p id="progressText">Processing... 0%</p>
-                            </div>
-                            <div class="evaluation-result" id="evaluationResult" style="display: none;">
-                                <h4>Evaluation Complete!</h4>
-                                <p class="result-score">Score: 85/100</p>
-                                <button class="btn btn-secondary btn-full" onclick="showSection('review')">Review Details</button>
+                                <p id="resultFeedback" class="result-feedback"></p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Submissions list -->
+                <div class="submissions-list card" id="evaluationSubmissions">
+                    <h3>Pending Submissions</h3>
+                    <div class="submission-grid" id="pendingSubmissionsGrid">
+                        <p>⏳ Loading pending submissions...</p>
+                    </div>
+                </div>
             </div>
+
 
             <!-- ================= REVIEW RESULTS ================= -->
             <div id="review" class="content-section">
@@ -245,6 +261,7 @@
     </div>
 
     <script src="backend/js/theme.js"></script>
-    <script src="backend/js/dashboard.js"></script>
+    <script src="backend/js/dashboard.js?v=1"></script>
 </body>
+
 </html>
