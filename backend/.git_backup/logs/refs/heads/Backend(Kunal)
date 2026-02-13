@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 e9f46760fe54cbd5ad354783e28740dce4ca5c89 Kunal <kunalsinghal365@gmail.com> 1761834446 +0530	branch: Created from origin/Backend(Kunal)
+e9f46760fe54cbd5ad354783e28740dce4ca5c89 b448f12f6241715a9ea43f535a9f837118ea3519 Kunal <kunalsinghal365@gmail.com> 1761834553 +0530	commit: Initial backend code added by Kunal
+b448f12f6241715a9ea43f535a9f837118ea3519 ebead59879219f1a0742703a861c1062bcdcd3a0 Kunal <kunalsinghal365@gmail.com> 1761845552 +0530	commit: Update Login and Signup by Kunal
+ebead59879219f1a0742703a861c1062bcdcd3a0 341d3b7c685f1686c2b15f354a79a138bd7c711f Kunal <kunalsinghal365@gmail.com> 1762142733 +0530	commit: Upload Section Updated
+341d3b7c685f1686c2b15f354a79a138bd7c711f cb0c157cf68b4e198ee122e5252973b382418e41 Kunal <kunalsinghal365@gmail.com> 1762179217 +0530	commit: Updating Student Uploading section and connecting to MongoDB
+cb0c157cf68b4e198ee122e5252973b382418e41 e30f2b6fe949e1c83d895081ea542d79bf16f4d8 Kunal <kunalsinghal365@gmail.com> 1762266287 +0530	commit: Updating Student dashboard
+e30f2b6fe949e1c83d895081ea542d79bf16f4d8 a6b12e137c491805d6807b4d037517047cab89b2 Kunal <kunalsinghal365@gmail.com> 1762273563 +0530	commit: Updating teacher dashboard
